@@ -31,9 +31,9 @@ class ACMNet(nn.Module):
         back_topk_num = max(temp_len // self.bak_topk_seg, 1)
         
         input_features = input_features.permute(0, 2, 1)
-        embeded_feature = self.feature_embedding(self.dropout(input_features))
+        embeded_feature = self.feature_embedding((input_features))
         
-        temp_att = self.att_branch(self.dropout(embeded_feature))
+        temp_att = self.att_branch((embeded_feature))
         temp_att = temp_att.permute(0, 2, 1)
         temp_att = torch.softmax(temp_att, dim=2)
         

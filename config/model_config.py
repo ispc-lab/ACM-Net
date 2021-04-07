@@ -54,7 +54,7 @@ _DATASET_HYPER_PARAMS = {
     "THUMOS":{
         "dropout":0.7,
         "lr":1e-4,
-        "weight_decay":0.0005,
+        "weight_decay":5e-5,
         "frames_per_sec":25,
         "segment_frames_num":16,
         "sample_segments_num":750,
@@ -63,11 +63,8 @@ _DATASET_HYPER_PARAMS = {
         "action_cls_num":len(_CLASS_NAME["THUMOS"]),
         "cls_threshold":0.25,
         "test_upgrade_scale":20,
-        # "data_dir":"./data/THUMOS14",
-        # "test_gt_file":"./data/THUMOS14/gt.json",
-        # "data_dir":"/DATA/W-TAL/THUMOS_New",
-        "data_dir":"/DATA/W-TAL/THU14",
-        "test_gt_file":"/DATA/W-TAL/THU14/gt.json",
+        "data_dir":"./data/THUMOS14",
+        "test_gt_file":"./data/THUMOS14/gt.json",
         "tiou_thresholds":np.arange(0.1, 1.00, 0.10),
         "nms_thresh":0.55,
         
@@ -107,7 +104,7 @@ _DATASET_HYPER_PARAMS = {
         "loss_lamb_3":0e-4,  
     }} 
 
-def build_args():
+def build_args(dataset=None):
     
     parser = argparse.ArgumentParser("This script is used for the weakly-supervised temporal aciton localization task.")
     
@@ -123,7 +120,8 @@ def build_args():
     parser.add_argument("--test", action="store_true")
     
     args = parser.parse_args()
-    
+    if dataset is not None:
+        args.dataset = dataset
     # Based on the selected dataset, we set dataset specific hyper-params. 
     args.class_name_lst = _CLASS_NAME[args.dataset]
     args.action_cls_num = _DATASET_HYPER_PARAMS[args.dataset]["action_cls_num"]

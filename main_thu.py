@@ -359,8 +359,7 @@ def main(args):
                     project="ACMNet_{}".format(args.dataset),
                     sync_tensorboard=True)
             
-        # optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), weight_decay=args.weight_decay)
-        optimizer = torch.optim.Adam(model.parameters(), lr=0.0001, betas=(0.9, 0.999), weight_decay=0.0005)
+        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), weight_decay=args.weight_decay)
 
         train_dataset = build_dataset(args, phase="train", sample="random") 
         test_dataset = build_dataset(args, phase="test", sample="uniform") 
@@ -425,6 +424,6 @@ def main(args):
 if __name__ == "__main__":
     
     set_random_seed()
-    args = build_args()
+    args = build_args(dataset="THUMOS")
     print(args)
     main(args)

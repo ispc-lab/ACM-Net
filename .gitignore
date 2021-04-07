@@ -127,3 +127,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Wandb 
+wandb
+
+# VSCODE
+.vscode
+
+# checkpoints
+checkpoints_acmnet
+
+# data
+./data/*

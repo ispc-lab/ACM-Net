@@ -32,7 +32,7 @@ python main_thu.py
 python main_act.py
 ```
 
-Note that you can configure your own hyper-parameters in `config/model_config.py` 
+You can configure your own hyper-parameters in `config/model_config.py` 
 
 To test your model, you can run following command:
 
@@ -42,6 +42,12 @@ python main_thu.py --test --checkpoint $checkpoint_path$
 
 # For the ActivityNet-1.3 datasets.
 python main_act.py --test --checkpoint $checkpoint_path$
+```
+
+Note that we apply the [`wandb`](https://github.com/wandb/client) client to log the experiments, if you don't want to use this tool, you can disable it in the command with   `--without_wandb` like 
+
+```bash
+python main_thu.py --without_wandb
 ```
 
 ### Citation
@@ -56,3 +62,14 @@ If you find our code or our paper useful for your research, please cite our work
   year={2021}
 }
 ```
+
+### Acknowledgement
+
+We referenced the repos below for the code
+
+- [BasNet](https://github.com/Pilhyeon/BaSNet-pytorch)
+- [ActivityNet](https://github.com/activitynet/ActivityNet)
+
+### Contact
+
+If you have any question or comment, please contact the first author of this paper -- Sanqing Qu (2011444@tongji.edu.cn)

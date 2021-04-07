@@ -138,4 +138,4 @@ wandb
 checkpoints_acmnet
 
 # data
-./data/*
+#./data/*

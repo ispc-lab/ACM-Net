@@ -226,7 +226,7 @@ def test(args, model, dataloader, criterion, phase="test"):
                 pos = np.where(tmp_int_cas[:, c_idx] >= act_thresh)
                 tmp_seg_list.append(pos)
             
-            props_list = get_proposal_oic(tmp_seg_list, (0.60*tmp_int_cas + 0.40*int_temp_att_ins_score_np), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.0)
+            props_list = get_proposal_oic(tmp_seg_list, (0.50*tmp_int_cas + 0.50*int_temp_att_ins_score_np), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.0)
             
             for i in range(len(props_list)):
                 if len(props_list[i]) == 0:
@@ -250,7 +250,7 @@ def test(args, model, dataloader, criterion, phase="test"):
                 pos = np.where(tmp_int_att[:, c_idx] >= att_thresh)
                 tmp_seg_list.append(pos)
             
-            props_list = get_proposal_oic(tmp_seg_list, (0.60*int_temp_cls_scores + 0.40*tmp_int_att), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.250)
+            props_list = get_proposal_oic(tmp_seg_list, (0.50*int_temp_cls_scores + 0.50*tmp_int_att), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.250)
             
             for i in range(len(props_list)):
                 if len(props_list[i]) == 0:
@@ -292,7 +292,7 @@ def test(args, model, dataloader, criterion, phase="test"):
     anet_detection = ANETDetection(ground_truth_file=args.test_gt_file_path,
                     prediction_file=test_final_json_path,
                     tiou_thresholds=args.tiou_thresholds,
-                    subset=phase)
+                    subset="val")
     
     test_mAP = anet_detection.evaluate()
     
@@ -323,6 +323,7 @@ def test(args, model, dataloader, criterion, phase="test"):
 #---------------------------------------------------------------------------------------------------------------#
 """   
 def main(args):
+    torch.multiprocessing.set_sharing_strategy('file_system')
     
     os.environ['CUDA_VIVIBLE_DEVICES'] = args.gpu
     device = torch.device("cuda:{}".format(args.gpu) if torch.cuda.is_available() else "cpu")
@@ -378,36 +379,35 @@ def main(args):
         for epoch_idx in tqdm(range(args.start_epoch, args.epochs)):
         
             train_log_dict = train(args, model, train_dataloader, criterion, optimizer)
-            
-            with torch.no_grad():
-                test_log_dict, test_tmp_data_log_dict = test(args, model, test_dataloader, criterion)
-                test_mAP = test_log_dict["test_mAP"]
-                
-            if test_mAP > best_test_mAP:
-                best_test_mAP = test_mAP
-                checkpoint_file = "{}_best_checkpoint.pth".format(args.dataset)
+            if epoch_idx %2 == 0:
+                with torch.no_grad():
+                    test_log_dict, test_tmp_data_log_dict = test(args, model, test_dataloader, criterion)
+                    test_mAP = test_log_dict["test_mAP"]
+                    
+                if test_mAP > best_test_mAP:
+                    best_test_mAP = test_mAP
+                    checkpoint_file = "{}_best_checkpoint.pth".format(args.dataset)
+                    torch.save({
+                        'epoch':epoch_idx,
+                        'model_state_dict':model.state_dict()
+                        }, os.path.join(save_dir, checkpoint_file))
+                                        
+                    with open(os.path.join(save_dir, "test_tmp_data_log_dict.pickle"), "wb") as f:
+                        pickle.dump(test_tmp_data_log_dict, f)
+
+                checkpoint_file = "{}_latest_checkpoint.pth".format(args.dataset)
                 torch.save({
                     'epoch':epoch_idx,
                     'model_state_dict':model.state_dict()
                     }, os.path.join(save_dir, checkpoint_file))
-                                    
-                with open(os.path.join(save_dir, "test_tmp_data_log_dict.pickle"), "wb") as f:
-                    pickle.dump(test_tmp_data_log_dict, f)
-
-            checkpoint_file = "{}_latest_checkpoint.pth".format(args.dataset)
-            torch.save({
-                'epoch':epoch_idx,
-                'model_state_dict':model.state_dict()
-                }, os.path.join(save_dir, checkpoint_file))
-            
-            print("Current test_mAP:{:.4f}, Current Best test_mAP:{:.4f} Current Epoch:{}/{}".format(test_mAP, best_test_mAP, epoch_idx, args.epochs))
-            print("-------------------------------------------------------------------------------")
+                
+                print("Current test_mAP:{:.4f}, Current Best test_mAP:{:.4f} Current Epoch:{}/{}".format(test_mAP, best_test_mAP, epoch_idx, args.epochs))
+                print("-------------------------------------------------------------------------------")
             
             if not args.without_wandb:
                 wandb.log(train_log_dict)
                 wandb.log(test_log_dict)
 
-            # optimizer_scheduler.step()
     else:
         test_dataset = build_dataset(args, phase="test", sample="uniform")
         test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False,

@@ -71,8 +71,7 @@ class ACMLoss(nn.Module):
         sparse_loss = torch.sum(temp_att[:, :, :2], dim=1).mean()
         
         cls_loss = 1.0 * act_inst_loss + 1.0 * act_cont_loss + 1.0 * act_back_loss
-        # add_loss = self.lamb1 * guide_loss + self.lamb2 * feat_loss + self.lamb3 * sparse_loss
-        add_loss = 2e-3 * guide_loss + 5e-5 * feat_loss + 2e-4 * sparse_loss
+        add_loss = self.lamb1 * guide_loss + self.lamb2 * feat_loss + self.lamb3 * sparse_loss
         
         loss = cls_loss + add_loss
         

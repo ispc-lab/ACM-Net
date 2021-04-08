@@ -292,7 +292,7 @@ def test(args, model, dataloader, criterion, phase="test"):
     anet_detection = ANETDetection(ground_truth_file=args.test_gt_file_path,
                     prediction_file=test_final_json_path,
                     tiou_thresholds=args.tiou_thresholds,
-                    subset=phase)
+                    subset="test")
     
     test_mAP = anet_detection.evaluate()
     

@@ -79,9 +79,9 @@ _DATASET_HYPER_PARAMS = {
     },
     
     "ActivityNet":{
-        "dropout":0.5,
+        "dropout":0.7,
         "lr":1e-4,
-        "weight_decay":5e-5,
+        "weight_decay":0.001,
         "frames_per_sec":25,
         "segment_frames_num":16,
         "sample_segments_num":75,
@@ -90,8 +90,10 @@ _DATASET_HYPER_PARAMS = {
         "action_cls_num":len(_CLASS_NAME["ActivityNet"]),
         "cls_threshold":0.10,
         "test_upgrade_scale":20,
-        "data_dir":"./data/ActivityNet13",
-        "test_gt_file":"./data/ActivityNet13/gt.json",
+        # "data_dir":"./data/ActivityNet13",
+        "data_dir":"/DATA/W-TAL/ActivityNet13/features",
+        # "test_gt_file":"./data/ActivityNet13/gt.json",
+        "test_gt_file":"/DATA/W-TAL/ActivityNet13/features/gt.json",
         "tiou_thresholds":np.arange(0.50, 1.00, 0.05),
         "nms_thresh":0.90,
         
@@ -100,7 +102,7 @@ _DATASET_HYPER_PARAMS = {
         "bak_topk_seg":10,
         
         "loss_lamb_1":5e-3,
-        "loss_lamb_2":5e-5,
+        "loss_lamb_2":1e-5,
         "loss_lamb_3":0e-4,  
     }} 
 

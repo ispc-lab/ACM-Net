@@ -1,5 +1,5 @@
 ## ACM-Net: Weakly-Supervised-Action-Localization
-The  official repository of our paper "**ACM-Net: Action Context Modeling Network for Weakly-Supervised Temporal Action Localization**" .
+The  official repository of our paper ["**ACM-Net: Action Context Modeling Network for Weakly-Supervised Temporal Action Localization**"](https://arxiv.org/pdf/2104.02967.pdf) .
 
 ![](./figs/framework.png)
 

@@ -63,7 +63,8 @@ _DATASET_HYPER_PARAMS = {
         "action_cls_num":len(_CLASS_NAME["THUMOS"]),
         "cls_threshold":0.25,
         "test_upgrade_scale":20,
-        "data_dir":"./data/THUMOS14",
+        # "data_dir":"/DATA/W-TAL/THU14/",
+        "data_dir":"./data/THUMOS14/",
         "test_gt_file":"./data/THUMOS14/gt.json",
         "tiou_thresholds":np.arange(0.1, 1.00, 0.10),
         "nms_thresh":0.55,
@@ -79,7 +80,7 @@ _DATASET_HYPER_PARAMS = {
     },
     
     "ActivityNet":{
-        "dropout":0.7,
+        "dropout":0.5,
         "lr":1e-4,
         "weight_decay":0.001,
         "frames_per_sec":25,
@@ -90,10 +91,9 @@ _DATASET_HYPER_PARAMS = {
         "action_cls_num":len(_CLASS_NAME["ActivityNet"]),
         "cls_threshold":0.10,
         "test_upgrade_scale":20,
-        # "data_dir":"./data/ActivityNet13",
-        "data_dir":"/DATA/W-TAL/ActivityNet13/features",
-        # "test_gt_file":"./data/ActivityNet13/gt.json",
-        "test_gt_file":"/DATA/W-TAL/ActivityNet13/features/gt.json",
+        "data_dir":"./data/ActivityNet13",
+        # "data_dir":"/DATA/W-TAL/ActivityNet13/features",
+        "test_gt_file":"./data/ActivityNet13/gt.json",
         "tiou_thresholds":np.arange(0.50, 1.00, 0.05),
         "nms_thresh":0.90,
         

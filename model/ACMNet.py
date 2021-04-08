@@ -14,6 +14,7 @@ class ACMNet(nn.Module):
         
         self.dropout = nn.Dropout(args.dropout)
         self.feature_embedding = nn.Sequential(
+            # nn.Dropout(args.dropout),
             nn.Conv1d(in_channels=self.feature_dim, out_channels=self.feature_dim, kernel_size=3, padding=1),
             nn.ReLU(),
             )
@@ -31,8 +32,9 @@ class ACMNet(nn.Module):
         back_topk_num = max(temp_len // self.bak_topk_seg, 1)
         
         input_features = input_features.permute(0, 2, 1)
-        embeded_feature = self.feature_embedding((input_features))
+        embeded_feature = self.feature_embedding(input_features)
         
+        # temp_att = self.att_branch(self.dropout(embeded_feature))
         temp_att = self.att_branch((embeded_feature))
         temp_att = temp_att.permute(0, 2, 1)
         temp_att = torch.softmax(temp_att, dim=2)

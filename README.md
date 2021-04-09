@@ -1,11 +1,11 @@
 ## ACM-Net: Weakly-Supervised-Action-Localization
 The  official repository of our paper ["**ACM-Net: Action Context Modeling Network for Weakly-Supervised Temporal Action Localization**"](https://arxiv.org/pdf/2104.02967.pdf) .
+
 ![](./figs/framework.png)
 
 ### Motivation
 
 ![](./figs/motivation.png)
-
 Traditional methods mainly focus on foreground and background frames separation with only a single attention branch and class activation sequence. However, we argue that apart from the distinctive foreground and background frames there are plenty of semantically ambiguous action context frames. It does not make sense to group those context frames to the same background class since they are semantically related to a specific action category. Consequently, it is challenging to suppress action context frames with only a single class activation sequence. To address this issue, in this paper, we propose an action-context modeling network termed ACM-Net, which integrates a three-branch attention module to measure the likelihood of each temporal point being action instance, context, or non-action background, simultaneously. Then based on the obtained three-branch attention values, we construct three-branch class activation sequences to represent the action instances, contexts, and non-action backgrounds, individually. 
 
 ### Requirements

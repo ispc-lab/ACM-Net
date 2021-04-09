@@ -56,7 +56,7 @@ If you find our code or our paper useful for your research, please cite our work
 
 ```latex
 @article{qu_2021_acmnet,
-  title={ACM-Net: Action Context Modeling Network forWeakly-Supervised Temporal Action Localization},
+  title={ACM-Net: Action Context Modeling Network for Weakly-Supervised Temporal Action Localization},
   author={Sanqing Qu, Guang Chen, Zhijun Li, Lijun Zhang, Fan Lu, Alois Knoll},
   journal={arXiv preprint arXiv:2104.02967},
   year={2021}

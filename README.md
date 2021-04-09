@@ -1,5 +1,4 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/acm-net-action-context-modeling-network-for/weakly-supervised-action-localization-on-1)](https://paperswithcode.com/sota/weakly-supervised-action-localization-on-1?p=acm-net-action-context-modeling-network-for)
-
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/acm-net-action-context-modeling-network-for/weakly-supervised-action-localization-on-4)](https://paperswithcode.com/sota/weakly-supervised-action-localization-on-4?p=acm-net-action-context-modeling-network-for)
 
 ## ACM-Net: Weakly-Supervised-Action-Localization

@@ -80,7 +80,7 @@ _DATASET_HYPER_PARAMS = {
     },
     
     "ActivityNet":{
-        "dropout":0.5,
+        "dropout":0.7,
         "lr":1e-4,
         "weight_decay":0.001,
         "frames_per_sec":25,
@@ -101,8 +101,11 @@ _DATASET_HYPER_PARAMS = {
         "con_topk_seg":10,
         "bak_topk_seg":10,
         
+        # "loss_lamb_1":5e-3,
+        # "loss_lamb_2":1e-5,
+        # "loss_lamb_3":0e-4, 
         "loss_lamb_1":5e-3,
-        "loss_lamb_2":1e-5,
+        "loss_lamb_2":5e-5,
         "loss_lamb_3":0e-4,  
     }} 
 

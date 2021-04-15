@@ -23,13 +23,15 @@ def weights_init(model):
     
 class ACMLoss(nn.Module):
     
-    def __init__(self, lamb1=2e-3, lamb2=5e-5, lamb3=2e-4):
+    def __init__(self, lamb1=2e-3, lamb2=5e-5, lamb3=2e-4, dataset="THUMOS14"):
         super(ACMLoss, self).__init__()
+        
+        self.dataset = dataset
         self.lamb1 = lamb1 # att_norm_loss param 
         self.lamb2 = lamb2
         self.lamb3 = lamb3 
         self.feat_margin = 50  #50
-            
+        
     def cls_criterion(self, inputs, label):
         return - torch.mean(torch.sum(torch.log(inputs) * label, dim=1))
     
@@ -70,7 +72,12 @@ class ACMLoss(nn.Module):
         # att_loss = torch.sum(temp_att[:, :, 0], dim=1).mean() + torch.sum(temp_att[:, :, 1], dim=1).mean() 
         sparse_loss = torch.sum(temp_att[:, :, :2], dim=1).mean()
         
-        cls_loss = 1.0 * act_inst_loss + 1.0 * act_cont_loss + 1.0 * act_back_loss
+        if self.dataset == "THUMOS14":
+            cls_loss = 1.0 * act_inst_loss + 1.0 * act_cont_loss + 1.0 * act_back_loss
+        else:
+            # We add more strong regularization operation to the ActivityNet dataset since this dataset contains much more diverse videos.
+            cls_loss = 5.0 * act_inst_loss + 1.0 * act_cont_loss + 1.0 * act_back_loss
+            
         add_loss = self.lamb1 * guide_loss + self.lamb2 * feat_loss + self.lamb3 * sparse_loss
         
         loss = cls_loss + add_loss

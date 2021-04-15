@@ -226,7 +226,7 @@ def test(args, model, dataloader, criterion, phase="test"):
                 pos = np.where(tmp_int_cas[:, c_idx] >= act_thresh)
                 tmp_seg_list.append(pos)
             
-            props_list = get_proposal_oic(tmp_seg_list, (0.60*tmp_int_cas + 0.40*int_temp_att_ins_score_np), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.0)
+            props_list = get_proposal_oic(tmp_seg_list, (0.70*tmp_int_cas + 0.30*int_temp_att_ins_score_np), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.0)
             
             for i in range(len(props_list)):
                 if len(props_list[i]) == 0:
@@ -250,7 +250,7 @@ def test(args, model, dataloader, criterion, phase="test"):
                 pos = np.where(tmp_int_att[:, c_idx] >= att_thresh)
                 tmp_seg_list.append(pos)
             
-            props_list = get_proposal_oic(tmp_seg_list, (0.60*int_temp_cls_scores + 0.40*tmp_int_att), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.250)
+            props_list = get_proposal_oic(tmp_seg_list, (0.70*int_temp_cls_scores + 0.30*tmp_int_att), cls_prediction, score_np, t_factor, lamb=0.150, gamma=0.250)
             
             for i in range(len(props_list)):
                 if len(props_list[i]) == 0:
@@ -372,7 +372,7 @@ def main(args):
         test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False,
                                     num_workers=args.num_workers, drop_last=False)
         
-        criterion = ACMLoss(lamb1=args.loss_lamb_1, lamb2=args.loss_lamb_2, lamb3=args.loss_lamb_3)
+        criterion = ACMLoss(lamb1=args.loss_lamb_1, lamb2=args.loss_lamb_2, lamb3=args.loss_lamb_3, dataset="ActivityNet")
         
         best_test_mAP = 0
         

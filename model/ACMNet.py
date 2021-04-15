@@ -5,6 +5,7 @@ class ACMNet(nn.Module):
     
     def __init__(self, args):
         super(ACMNet, self).__init__()
+        self.dataset = args.dataset
         self.feature_dim = args.feature_dim
         self.action_cls_num = args.action_cls_num # Only the action categories number.
         self.drop_thresh = args.dropout
@@ -13,11 +14,20 @@ class ACMNet(nn.Module):
         self.bak_topk_seg = args.bak_topk_seg
         
         self.dropout = nn.Dropout(args.dropout)
-        self.feature_embedding = nn.Sequential(
-            # nn.Dropout(args.dropout),
-            nn.Conv1d(in_channels=self.feature_dim, out_channels=self.feature_dim, kernel_size=3, padding=1),
-            nn.ReLU(),
-            )
+        if self.dataset == "THUMOS":
+            self.feature_embedding = nn.Sequential(
+                # nn.Dropout(args.dropout),
+                nn.Conv1d(in_channels=self.feature_dim, out_channels=self.feature_dim, kernel_size=3, padding=1),
+                nn.ReLU(),
+                )
+        else:
+            # We add more strong regularization operation to the ActivityNet dataset since this dataset contains much more diverse videos.
+            self.feature_embedding = nn.Sequential(
+                nn.Dropout(args.dropout),
+                nn.Conv1d(in_channels=self.feature_dim, out_channels=self.feature_dim, kernel_size=3, padding=1),
+                nn.ReLU(),
+                )
+        
         # We introduce three-branch attention, action instance, action context and the irrelevant backgrounds.
         self.att_branch = nn.Conv1d(in_channels=self.feature_dim, out_channels=3, kernel_size=1, padding=0)
         self.snippet_cls = nn.Linear(in_features=self.feature_dim, out_features=(self.action_cls_num + 1))
@@ -34,8 +44,12 @@ class ACMNet(nn.Module):
         input_features = input_features.permute(0, 2, 1)
         embeded_feature = self.feature_embedding(input_features)
         
-        # temp_att = self.att_branch(self.dropout(embeded_feature))
-        temp_att = self.att_branch((embeded_feature))
+        if self.dataset == "THUMOS":
+            temp_att = self.att_branch((embeded_feature))
+        else:
+            # We add more strong regularization operation to the ActivityNet dataset since this dataset contains much more diverse videos.
+            temp_att = self.att_branch(self.dropout(embeded_feature))
+        
         temp_att = temp_att.permute(0, 2, 1)
         temp_att = torch.softmax(temp_att, dim=2)
         

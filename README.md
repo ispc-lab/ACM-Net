@@ -24,7 +24,7 @@ pip install -r requirements.txt
 We evaluate our ACM-Net on two popular benchmark datasets THUMOS-14 and ActivityNet-1.3. We provide extracted features for
 
 - THUMOS-14: [Google Drive](https://drive.google.com/drive/folders/1C4YG01X9IIT1a568wMM8fgm4k4xTC2EQ?usp=sharing) /  [Baidu Wangpan](https://pan.baidu.com/s/1rt8szoDspzJ5SjpcjccFXg) (pwd: vc21)
-- ActivityNet-1.3: Google Drive /  [Baidu Wangpan](https://pan.baidu.com/s/1FB4vb8JSBkKqCGD_bqCtYg) (pwd: man7)
+- ActivityNet-1.3: [Google Drive](https://drive.google.com/drive/folders/1B1srfie2UWKwaC4-7bo6UItmJoESCUq3?usp=sharing) /  [Baidu Wangpan](https://pan.baidu.com/s/1FB4vb8JSBkKqCGD_bqCtYg) (pwd: man7)
 
 Before running the code, please download the target dataset and unzip it under the `data/` folder.
 
@@ -34,10 +34,10 @@ You can train your own model by running:
 
 ```bash
 # For the THUMOS-14 datasets.
-python main_thu.py
+python main_thu.py --batch_size 16
 
 # For the ActivityNet-1.3 datasets.
-python main_act.py
+python main_act.py --batch_size 64
 ```
 
 You can configure your own hyper-parameters in `config/model_config.py` 
@@ -46,10 +46,10 @@ To test your model, you can run following command:
 
 ```bash
 # For the THUMOS-14 datasets.
-python main_thu.py --test --checkpoint $checkpoint_path$
+python main_thu.py --test --checkpoint $checkpoint_path
 
 # For the ActivityNet-1.3 datasets.
-python main_act.py --test --checkpoint $checkpoint_path$
+python main_act.py --test --checkpoint $checkpoint_path
 ```
 
 Note that we apply the [`wandb`](https://github.com/wandb/client) client to log the experiments, if you don't want to use this tool, you can disable it in the command with   `--without_wandb` like 

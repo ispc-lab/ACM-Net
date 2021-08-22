@@ -1,5 +1,3 @@
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/acm-net-action-context-modeling-network-for/weakly-supervised-action-localization-on-1)](https://paperswithcode.com/sota/weakly-supervised-action-localization-on-1?p=acm-net-action-context-modeling-network-for)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/acm-net-action-context-modeling-network-for/weakly-supervised-action-localization-on)](https://paperswithcode.com/sota/weakly-supervised-action-localization-on?p=acm-net-action-context-modeling-network-for)
 
 ## ACM-Net: Weakly-Supervised-Action-Localization
 The  official repository of our paper ["**ACM-Net: Action Context Modeling Network for Weakly-Supervised Temporal Action Localization**"](https://arxiv.org/pdf/2104.02967.pdf) .
